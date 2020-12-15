@@ -41,8 +41,9 @@ def autosolve(g):
 def autogenerate():
 	print('wip')
 	
-#Ввод: матрица, число и координаты ячейки, вывод: Ложь или Истина взависимости от того можно ли поставить это число на выбранных координатах	
+#Ввод: матрица, число и координаты ячейки, вывод: Ложь или Истина взависимости от того можно ли поставить это число на выбранных координатах
 def check_cell(g,n,x,y):
+	# TODO: fix logic
 	x -= 1
 	y -= 1
 	if n>9 or n<1:
@@ -69,12 +70,14 @@ def check_cell(g,n,x,y):
 				return False
                         
 	return True #Возврат истины в случае если все условия соблюдены
-			
+
 def get_nums(g,x,y):
+	"""Что это делает?"""
+	# TODO: fix logic and add docstring
 	p = []
-	for n in range(10):
+	for n in range(1,10):
 		if check_cell(g,n,x,y):
-			p.insert(0, n)
+			p.append(n)
 	return p		
 			
 def is_solved(g):
@@ -100,11 +103,29 @@ while True:
 			autogenerate()
 		elif val == 'debug':
 			#Тесты
+
+			grid = [
+				[9, 0, 2, 6, 1, 7, 0, 0, 4],
+				[0, 1, 0, 0, 0, 0, 0, 6, 0],
+				[0, 5, 0, 0, 0, 8, 9, 0, 0],
+				[0, 0, 0, 1, 0, 0, 2, 0, 0],
+				[5, 0, 0, 0, 9, 0, 1, 4, 0],
+				[0, 9, 8, 0, 0, 0, 0, 0, 3],
+				[0, 0, 0, 0, 4, 0, 0, 0, 0],
+				[2, 0, 0, 0, 5, 0, 0, 0, 0],
+				[0, 8, 0, 0, 0, 3, 0, 0, 5]
+			]
+
 			print('Тесты. Должна быть только Правда')
+			print('Testing this on grid:')
 			show_grid(grid)
+			print('testing is_solved')
 			print(is_solved(grid) == False)
+			print('testing get_nums on cell 4,2')
 			print(get_nums(grid, 4, 2) == [9,5,4,3,2])
+			print('testing check_cell on cell 8,8')
 			print(check_cell(grid, 1, 8, 8) == True)
+			print('testing check_cell on cell 2,2')
 			print(check_cell(grid, 1, 2, 2) == False)
 			
 		else:

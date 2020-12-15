@@ -24,16 +24,18 @@ def show_grid(g):
 #Ввод: матрица с заданием, вывод: решённая матрица	
 def autosolve(g):
 	solved_grid = g.copy()
+	# TODO: should do deepcopy instead of copy
 	p_nums = []
 	while not is_solved(solved_grid):
+	# TODO: is_soved seems to not work properly. Test it better
 		for y in range(9):
 			for x in range(9):
 				p_nums = get_nums(solved_grid,x,y)
 				if len(p_nums) == 1:
-					print(p_nums)
+					print("found unique number for cell ({},{}): {}".format(x,y,p_nums[0]))
 					solved_grid[y][x] = p_nums[0]
-					
-		show_grid(solved_grid)				
+					print("found unique number for cell ({},{}): {}".format(x,y,p_nums[0]))
+
 		return solved_grid
 
 #Ввод: -, вывод: матрица с заданием
@@ -96,7 +98,8 @@ while True:
 		val = input('Введите число и координаты клетки: ')
 		if val == 'solve':
 			print('Решаем...')
-			autosolve(grid)
+			solved = autosolve(grid)
+			show_grid(solved)
 		elif val == 'force':
 			f = True
 		elif val == 'generate':

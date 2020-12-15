@@ -38,6 +38,7 @@ def autosolve(g):
 
 		return solved_grid
 
+
 #Ввод: -, вывод: матрица с заданием
 #TODO
 def autogenerate():

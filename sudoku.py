@@ -5,7 +5,7 @@ num = -1
 
 grid =[ 
         [9, 0, 2, 6, 1, 7, 0, 0, 4], 
-        [0, 1, 0, 0, 0, 0, 0, 6, 0], 
+        [0, 1, 0, 0, 0, 0, 0, 6, 0], #2,3,4,5,9
         [0, 5, 0, 0, 0, 8, 9, 0, 0], 
         [0, 0, 0, 1, 0, 0, 2, 0, 0], 
         [5, 0, 0, 0, 9, 0, 1, 4, 0], 
@@ -42,36 +42,39 @@ def autogenerate():
 	print('wip')
 	
 #Ввод: матрица, число и координаты ячейки, вывод: Ложь или Истина взависимости от того можно ли поставить это число на выбранных координатах	
-def check_cell(g,num,x,y):
-	
+def check_cell(g,n,x,y):
+	x -= 1
+	y -= 1
+	if n>9 or n<1:
+		return False
+
 	if g[x][y] != 0: #Проверка наличия числа на выбранной клетке
 		return False
 	
 	indx = -1
 	indy = -1
 	for indx in range(9): #Проверка наличия числа в строке
-		if indx != x and g[y][indx] == num:
+		if indx != x and g[y][indx] == n:
 			return False
 	
 	for indy in range(9): #Проверка наличия числа в столбце
-		if indx != y and g[indy][x] == num:
+		if indy != y and g[indy][x] == n:
 			return False
 			
 	bx = x//3
 	by = y//3
 	for i in range(by*3, by*3+3): #Проверка наличия числа в блоке
 		for j in range(bx*3, bx*3+3):
-			if g[i][j] == num and (i,j) != (y,x):
+			if g[i][j] == n and (i,j) != (y,x):
 				return False
                         
-	return True #Возврат правды в случае если все условия соблюдены
+	return True #Возврат истины в случае если все условия соблюдены
 			
 def get_nums(g,x,y):
 	p = []
 	for n in range(10):
 		if check_cell(g,n,x,y):
 			p.insert(0, n)
-	print(p)		
 	return p		
 			
 def is_solved(g):
@@ -100,7 +103,7 @@ while True:
 			print('Тесты. Должна быть только Правда')
 			show_grid(grid)
 			print(is_solved(grid) == False)
-			print(get_nums(grid, 4, 2))
+			print(get_nums(grid, 4, 2) == [9,5,4,3,2])
 			print(check_cell(grid, 1, 8, 8) == True)
 			print(check_cell(grid, 1, 2, 2) == False)
 			
@@ -109,8 +112,6 @@ while True:
 			num = int(vals[0])
 			x = int(vals[1])
 			y = int(vals[2])
-			x -= 1
-			y -= 1
 			if x < 10 or y < 10:
 				if f == True:
 					grid[y][x] = num
